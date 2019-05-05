@@ -1,5 +1,7 @@
 ﻿@model Coursework_in_Java.Models.Tax.TaxDeclarationModel
 
+@using Coursework_in_Java.AppKernel.HelpersExtensions
+
 @{
     ViewBag.Title = "Детальніше";
 }
@@ -55,7 +57,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TaxDeclarationDetail.IsHimselfFillsDeclaration)
+            @*@Html.DisplayFor(model => model.TaxDeclarationDetail.IsHimselfFillsDeclaration)*@
+            @Html.YesNo(@Model.TaxDeclarationDetail.IsHimselfFillsDeclaration)
         </dd>
 
         <dt>
@@ -63,7 +66,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TaxDeclarationDetail.IsResident)
+            @*@Html.DisplayFor(model => model.TaxDeclarationDetail.IsResident)*@
+            @Html.YesNo(@Model.TaxDeclarationDetail.IsResident)
         </dd>
 
         <dt>
@@ -169,5 +173,5 @@
 
 <p>
     @Html.ActionLink("Редагувати", "EditReport", new { id = Model.Id }) |
-    @Html.ActionLink("Назад", "Index")
+    @Html.ActionLink("Назад", "Index", new { controller = "TaxReport"})
 </p>

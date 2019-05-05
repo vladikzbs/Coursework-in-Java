@@ -168,17 +168,17 @@
     <Compile Include="AppKernel\DatabaseConfigurations\FluentApiConfigs\InspectorModelConfig.cs" />
     <Compile Include="AppKernel\DatabaseConfigurations\FluentApiConfigs\TaxDeclarationDetailModelConfig.cs" />
     <Compile Include="AppKernel\DatabaseConfigurations\FluentApiConfigs\TaxDeclarationModelConfig.cs" />
-    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\IInitializeStrategy.cs" />
-    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\InspectorsAccountInitialize.cs" />
-    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\InspectorsInitialize.cs" />
+    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\CommandInvoker.cs" />
+    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\BaseCommand.cs" />
+    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\InspectorsAccountInitializeCommand.cs" />
+    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\InspectorsInitializeCommand.cs" />
     <Compile Include="AppKernel\HelpersExtensions\HtmlHelperExtensions.cs" />
     <Compile Include="AppKernel\MainInterfaces\ITaxDeclaration.cs" />
-    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\CitizenInitialize.cs" />
-    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\UserInitializer.cs" />
+    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\CitizenInitializeCommand.cs" />
+    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\UserInitializerCommand.cs" />
     <Compile Include="AppKernel\Managers\CitizenManager.cs" />
     <Compile Include="AppKernel\Managers\InspectorPanelManager.cs" />
     <Compile Include="AppKernel\Managers\TaxReportManager.cs" />
-    <Compile Include="AppKernel\Roles\RoleInfo.cs" />
     <Compile Include="Areas\Inspector\Controllers\PanelController.cs" />
     <Compile Include="Areas\Inspector\InspectorAreaRegistration.cs" />
     <Compile Include="Controllers\CitizenController.cs" />
@@ -209,7 +209,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\RoleInitializer.cs" />
+    <Compile Include="AppKernel\DatabaseConfigurations\Initializers\RoleInitializerCommand.cs" />
     <Compile Include="Models\Users\PhoneModel.cs" />
     <Compile Include="Models\Tax\TaxDeclarationModel.cs" />
     <Compile Include="Models\Tax\TaxDeclarationDetailModel.cs" />
@@ -329,6 +329,7 @@
     <Content Include="Views\Error\UknownError.cshtml" />
     <Content Include="Views\Error\WebServerIsDown.cshtml" />
     <Content Include="Views\Error\ConnectionTimedOut.cshtml" />
+    <Content Include="Views\TaxReport\Rules.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Inspector\Models\" />

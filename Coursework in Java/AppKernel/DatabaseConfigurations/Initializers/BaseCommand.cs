@@ -7,15 +7,8 @@ using System.Threading.Tasks;
 
 namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
 {
-    public enum Usage
+    public abstract class BaseCommand
     {
-        Yes,
-        No
-    }
-
-    public interface IInitializeStrategy
-    {
-        Usage UsageStatus { get; set; }
-        void Initialize(ApplicationDbContext context);
+        public abstract void Execute(ApplicationDbContext context);
     }
 }

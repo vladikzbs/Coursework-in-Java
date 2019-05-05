@@ -11,17 +11,15 @@ using System.Web.Hosting;
 
 namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
 {
-    public class InspectorsInitialize : IInitializeStrategy
+    public class InspectorsInitializeCommand : BaseCommand
     {
-        public Usage UsageStatus { get; set; } = Usage.Yes;
-
-        public void Initialize(ApplicationDbContext context)
+        public override void Execute(ApplicationDbContext db)
         {
             IReadOnlyCollection<InspectorModel> inspectors = GetInspectors();
 
-            context.Inspectors.AddRange(inspectors);
+            db.Inspectors.AddRange(inspectors);
 
-            context.SaveChanges();
+            db.SaveChanges();
         }
 
         private IReadOnlyCollection<InspectorModel> GetInspectors()

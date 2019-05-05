@@ -3,7 +3,7 @@
 }
 
 <div class="jumbotron">
-    <h1>Система подачі звітів у налогову</h1>
+    <h1>Система подачі звітів у податкову</h1>
     <p class="lead">Прозорий, чесний, швидкий та зручний спосіб подачі звітів у податкову в електронному вигляді.</p>
     <p>@Html.ActionLink("Детальніше", "About", "Home", new { @class="btn btn-primary btn-lg" })</p>
 </div>
@@ -12,12 +12,12 @@
     <div class="col-md-4">
         <h2>Правила подачі звітів у податкову</h2>
         <p>Перед подачею звіту, рекомендуємо ознайомитись із правилами подачі податкового звіту.</p>
-        <p>@Html.ActionLink("Детальніше", "Index", new { controller = "TaxReport"}, new { @class = "btn btn-default" })</p>
+        <p>@Html.ActionLink("Детальніше", "Rules", new { controller = "TaxReport"}, new { @class = "btn btn-default" })</p>
     </div>
     <div class="col-md-4">
         <h2>Анонімний відгук про нашу роботу</h2>
         <p>Ви можете залишити анонімний відгук про роботу нашої системи, без реєстрації.</p>
-        <p>@Html.ActionLink("Детальніше", "About", "Home", new { @class = "btn btn-default" })</p>
+        <p>@Html.ActionLink("Детальніше", "Index", new { controller  = "Posts"}, new { @class = "btn btn-default" })</p>
     </div>
     <div class="col-md-4">
         <h2>Список податкових інспекторів</h2>

@@ -34,7 +34,7 @@ namespace Coursework_in_Java.Models.Tax
         [Required, Display(Name = "Квартал")]
         public int Quarter { get; set; }
 
-        [Column(TypeName = "datetime2")]
+        [Column(TypeName = "datetime2"), Display(Name = "Дата подачі")]
         //[Required, Display(Name = "Дата подачі")]
         public DateTime? DateOfFilling { get; set; }
 

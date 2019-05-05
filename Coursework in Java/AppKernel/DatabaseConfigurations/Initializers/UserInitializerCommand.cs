@@ -1,5 +1,4 @@
-﻿using Coursework_in_Java.AppKernel.Roles;
-using Coursework_in_Java.Models;
+﻿using Coursework_in_Java.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -10,14 +9,12 @@ using System.Web;
 
 namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
 {
-    public class UserInitializer : IInitializeStrategy
+    public class UserInitializerCommand : BaseCommand
     {
-        public Usage UsageStatus { get; set; } = Usage.Yes;
-
-        public void Initialize(ApplicationDbContext context)
+        public override void Execute(ApplicationDbContext db)
         {
-            ApplicationUserManager userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
-            RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            ApplicationUserManager userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
+            RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
             var admin = new ApplicationUser
             {
@@ -31,19 +28,17 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
 
             if (result.Succeeded)
             {
-                if (roleManager.RoleExists(UserRoles.Admin.ToString()))
+                var roles = roleManager.Roles.ToList();
+
+                foreach (var role in roles)
                 {
-                    var roles = roleManager.Roles.ToList();
-
-                    foreach (var role in roles)
+                    if (HasNeededRole(role.Name))
                     {
-                        if (HasNeededRole(role.Name))
-                        {
-                            userManager.AddToRole(admin.Id, role.Name);
+                        userManager.AddToRole(admin.Id, role.Name);
 
-                        }
                     }
                 }
+
             }
         }
 
@@ -53,10 +48,10 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
 
             switch (role)
             {
-                case UserRoles.Admin:
                 case UserRoles.User:
                     return true;
 
+                case UserRoles.Admin:
                 case UserRoles.Director:
                 case UserRoles.Inspector:
                 case UserRoles.Undefined:

@@ -19,19 +19,18 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
         User,
         Guest
     }
-    public class RoleInitializer : IInitializeStrategy
+    public class RoleInitializerCommand : BaseCommand
     {
-        public RoleInitializer()
+        public RoleInitializerCommand()
         {
             Roles = new List<IdentityRole>(GetStandartRoles());
         }
 
         public IReadOnlyCollection<IdentityRole> Roles { get; }
-        public Usage UsageStatus { get; set; } = Usage.Yes;
 
-        public void Initialize(ApplicationDbContext context)
+        public override void Execute(ApplicationDbContext db)
         {
-            RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
             foreach (var role in Roles)
             {
@@ -43,11 +42,10 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
         {
             return new List<IdentityRole>
             {
-                new IdentityRole {Name = UserRoles.Admin.ToString()},
-                new IdentityRole {Name = UserRoles.Director.ToString()},
+                //new IdentityRole {Name = UserRoles.Admin.ToString()},
+                //new IdentityRole {Name = UserRoles.Director.ToString()},
                 new IdentityRole {Name = UserRoles.Inspector.ToString()},
                 new IdentityRole {Name = UserRoles.User.ToString()},
-                new IdentityRole {Name = UserRoles.Guest.ToString()},
             };
         }
     }

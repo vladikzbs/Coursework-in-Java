@@ -262,6 +262,13 @@ namespace Coursework_in_Java.Controllers
             return View(taxDeclaration);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Rules()
+        {
+            return View();
+        }
+
         //private SelectList GetInspectorsList()
         //{
         //    var inspectors = db.Inspectors.Where(x => x.Name != "Default").ToList();

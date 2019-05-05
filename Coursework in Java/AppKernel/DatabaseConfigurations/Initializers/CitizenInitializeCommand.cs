@@ -7,30 +7,28 @@ using System.Web;
 
 namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
 {
-    public class CitizenInitialize : IInitializeStrategy
+    public class CitizenInitializeCommand : BaseCommand
     {
-        public Usage UsageStatus { get; set; } = Usage.Yes;
-
-        public void Initialize(ApplicationDbContext context)
+        public override void Execute(ApplicationDbContext db)
         {
-            var admin = context.Users.Where(x => x.Email == "admin@java.com").SingleOrDefault();
+            var admin = db.Users.Where(x => x.Email == "admin@java.com").SingleOrDefault();
 
             PhoneModel phone = new PhoneModel
             {
-                MobilePhone1 = "123-123-12-12"
+                MobilePhone1 = "099-123-00-00"
             };
 
             AddressModel address = new AddressModel
             {
-                City = "Kiyv",
-                Street = "Kreshatik",
-                HouseNumber = "House123",
-                AppartmentNumber = "123"
+                City = "Київ",
+                Street = "Хрещатик",
+                HouseNumber = "Дім 13",
+                AppartmentNumber = "999"
             };
 
             CitizenInformationDetailModel citizenInformation = new CitizenInformationDetailModel
             {
-                PostIndex = "PostIndex123",
+                PostIndex = "232131",
                 TaxCardNumber = admin.TaxIdentification,
                 Phone = phone,
                 Address = address
@@ -39,14 +37,14 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
             CitizenInformationModel citizen = new CitizenInformationModel
             {
                 Name = "Влад",
-                Surname = "Неизвестный",
-                Patronymic = "Аноним",
+                Surname = "Невідомий",
+                Patronymic = "Анонім",
                 Email = admin.Email,
                 CitizenInformationDetail = citizenInformation
             };
 
-            context.CitizenInformation.Add(citizen);
-            context.SaveChanges();
+            db.CitizenInformation.Add(citizen);
+            db.SaveChanges();
         }
 
     }

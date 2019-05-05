@@ -9,7 +9,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Coursework_in_Java.Models;
-using Coursework_in_Java.AppKernel.Roles;
 using Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers;
 
 namespace Coursework_in_Java.Controllers

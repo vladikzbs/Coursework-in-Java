@@ -4,27 +4,12 @@
     ViewBag.Title = "Відгуки";
 }
 
-@section styles{
-<style>
-
-    .my {
-    width: 300px; /* Ширина слоя */
-    margin: 7px; /* Значение отступов */
-    padding: 10px; /* Поля вокруг текста */
-    border: 4px solid black; /* Параметры границы */
-    background: #fc0; /* Цвет фона */
-   }
-
-    </style>
-
-}
-
 <h2>Відгуки</h2>
 
 <p>
     @Html.ActionLink("Додати коментар", "Create")
 </p>
-@*<table class="table">
+<table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
@@ -32,7 +17,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Content)
             </th>
-            <th></th>
+            @*<th></th>*@
         </tr>
 
     @foreach (var item in Model) {
@@ -41,22 +26,22 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Content)
+                @Html.DisplayTextFor(modelItem => item.Content)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
+            @*<td>
+                @Html.ActionLink("Редагувати", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Деталі", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Видалити", "Delete", new { id=item.Id })
+            </td>*@
         </tr>
     }
 
-    </table>*@
+    </table>
 
-    @foreach (var post in Model)
+    @*@foreach (var post in Model)
     {
         <div class="my">
             @post.Content
         </div>
         <br />
-    }
+    }*@

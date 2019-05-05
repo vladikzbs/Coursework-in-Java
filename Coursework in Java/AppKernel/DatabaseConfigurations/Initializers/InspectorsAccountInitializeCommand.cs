@@ -8,24 +8,22 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
 {
-    public class InspectorsAccountInitialize : IInitializeStrategy
+    public class InspectorsAccountInitializeCommand : BaseCommand
     {
-        public Usage UsageStatus { get; set; } = Usage.Yes;
-
-        public void Initialize(ApplicationDbContext context)
+        public override void Execute(ApplicationDbContext db)
         {
             //using (var transaction = context.Database.BeginTransaction())
             //{
             //    try
             //    {
-            var inspectors = context.Inspectors.ToList();
+            var inspectors = db.Inspectors.ToList();
 
             // For template
             string email = "inspector{0}@mail.com";
             string password = "ins123";
 
-            ApplicationUserManager userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
-            RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            ApplicationUserManager userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
+            RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
             List<ApplicationUser> users = new List<ApplicationUser>();
             for (int i = 0; i < 10; i++)
@@ -49,7 +47,7 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
             if (inspectorRole == null)
                 throw new Exception("Не найдена роль инспектора");
 
-            context.SaveChanges();
+            db.SaveChanges();
 
             for (int i = 0; i < 10; i++)
             {
@@ -59,7 +57,7 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
                 }
             }
 
-            context.SaveChanges();
+            db.SaveChanges();
 
             //    transaction.Commit();
             //}
