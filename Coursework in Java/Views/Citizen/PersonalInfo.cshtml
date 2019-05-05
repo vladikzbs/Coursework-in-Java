@@ -1,0 +1,97 @@
+﻿@model Coursework_in_Java.Models.Users.CitizenInformationModel
+
+@{
+    ViewBag.Title = "Персональна інформація";
+}
+
+<h2>Персональна інформація</h2>
+
+<div>
+    <h4>Детальна інфорація користувача</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patronymic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patronymic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformationDetail.TaxCardNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformationDetail.TaxCardNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformationDetail.Phone.MobilePhone1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformationDetail.Phone.MobilePhone1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformationDetail.Address.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformationDetail.Address.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformationDetail.Address.Street)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformationDetail.Address.Street)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformationDetail.Address.HouseNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformationDetail.Address.HouseNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformationDetail.Address.AppartmentNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformationDetail.Address.AppartmentNumber)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редагувати", "EditPersonalInfo", new { id = Model.Id })
+</p>

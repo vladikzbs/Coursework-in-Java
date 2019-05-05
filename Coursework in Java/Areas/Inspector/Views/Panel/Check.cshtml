@@ -1,0 +1,243 @@
+﻿@model Coursework_in_Java.Models.Tax.TaxDeclarationModel
+
+@{
+    ViewBag.Title = "Перевірка";
+}
+
+<h2>Перевірка</h2>
+
+<h3>Перевірка податкової декларації</h3>
+<div>
+    <h4>Податкова декларація #@Model.UniqueDeclarationId</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DeclarationType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeclarationType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportingPeriod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportingPeriod)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quarter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quarter)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfFilling)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfFilling)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformation)
+        </dt>
+
+        <dd>
+            @Model.CitizenInformation.FullName
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformation.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformation.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformation.CitizenInformationDetail.PostIndex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformation.CitizenInformationDetail.PostIndex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformation.CitizenInformationDetail.TaxCardNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformation.CitizenInformationDetail.TaxCardNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformation.CitizenInformationDetail.Address.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformation.CitizenInformationDetail.Address.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformation.CitizenInformationDetail.Address.Street)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformation.CitizenInformationDetail.Address.Street)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformation.CitizenInformationDetail.Address.HouseNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformation.CitizenInformationDetail.Address.HouseNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformation.CitizenInformationDetail.Address.AppartmentNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformation.CitizenInformationDetail.Address.AppartmentNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformation.CitizenInformationDetail.Phone.MobilePhone1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CitizenInformation.CitizenInformationDetail.Phone.MobilePhone1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.IsHimselfFillsDeclaration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.IsHimselfFillsDeclaration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.IsResident)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.IsResident)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.NameOfControllingBody)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.NameOfControllingBody)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.SalaryIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.SalaryIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.SalaryIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.SalaryIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.HeritageDonatedIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.HeritageDonatedIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.InvestmentsIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.InvestmentsIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.OtherIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.OtherIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Tax.AbroadTaxes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Tax.AbroadTaxes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Tax.CitizenTax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Tax.CitizenTax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Tax.MilitaryTax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Tax.MilitaryTax)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.Hidden("id", Model.Id)
+
+        <p>
+            Прийняти податковий звіт? 
+            @Html.CheckBox("taxChecked")
+        </p>
+
+        <p>
+            Коментар інспектора щодо звіту
+        </p>
+            @Html.TextArea("message", new { rows = "10", cols = "350" })
+        
+        <br />
+        <br />
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Обробити" class="btn btn-default" />
+            <br />
+            <br />
+            <br />
+            @Html.ActionLink("До загального списку", "CheckReports")
+        </div>
+    }
+</div>

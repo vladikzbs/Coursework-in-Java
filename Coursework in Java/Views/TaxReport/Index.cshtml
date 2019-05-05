@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Coursework_in_Java.Models.Tax.TaxDeclarationModel>
+
+@using Coursework_in_Java.AppKernel.HelpersExtensions
+
+@{
+    ViewBag.Title = "Подача звіту";
+}
+
+<br />
+
+<h2>Ваші звіти</h2>
+
+<br />
+
+<p>@Html.ActionLink("Подати податковий звіт", "CreateReport")</p>
+<br />
+
+<table class="table">
+
+    <tr>
+        <td>
+            Id
+        </td>
+
+        <td>
+            @Html.DisplayNameFor(model => model.UniqueDeclarationId)
+        </td>
+
+        <td>
+            @Html.DisplayNameFor(model => model.DateOfFilling)
+        </td>
+
+        <td>
+            Інспектор
+        </td>
+
+        <td>
+            @Html.DisplayNameFor(model => model.DeclarationCheck.Checked)
+        </td>
+
+        <td>
+            @Html.DisplayNameFor(model => model.DeclarationCheck.Passed)
+        </td>
+
+        <td>
+            Опції
+        </td>
+    </tr>
+
+    @{
+        int identefier = 0;
+    }
+
+    @foreach (var declaration in Model)
+    {
+        identefier++;
+        <tr>
+            <td>
+                @identefier
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => declaration.UniqueDeclarationId)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => declaration.DateOfFilling)
+            </td>
+
+            <td>
+                @{ bool isinspector = Html.HasInspector(declaration.DeclarationCheck.Inspector);}
+
+                @if (isinspector)
+                {
+                    @: @declaration.DeclarationCheck.Inspector.FullName 
+                }
+                else
+                {
+                    @:------------
+                }
+
+            </td>
+
+            <td>
+                @Html.YesNo(declaration.DeclarationCheck.Checked)
+                @*@Html.DisplayFor(model => declaration.DeclarationCheck.Checked)*@
+            </td>
+
+            <td>
+                @Html.YesNo(declaration.DeclarationCheck.Passed)
+                @*@Html.DisplayFor(model => declaration.DeclarationCheck.Passed)*@
+            </td>
+
+            <td>
+                @Html.ActionLink("Детально", "Details", new { id = declaration.Id }) |
+                @Html.ActionLink("Редагувати", "EditReport", new { id = declaration.Id }) |
+                @Html.ActionLink("Видалити", "Delete", new { id = declaration.Id })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,173 @@
+﻿@model Coursework_in_Java.Models.Tax.TaxDeclarationModel
+
+@{
+    ViewBag.Title = "Детальніше";
+}
+
+<h2>Детальніше</h2>
+
+<div>
+    <h4>Декларація #@Model.UniqueDeclarationId</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DeclarationType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeclarationType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportingPeriod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportingPeriod)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quarter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quarter)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfFilling)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfFilling)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CitizenInformation)
+        </dt>
+
+        <dd>
+            @Model.CitizenInformation.FullName
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.IsHimselfFillsDeclaration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.IsHimselfFillsDeclaration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.IsResident)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.IsResident)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.NameOfControllingBody)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.NameOfControllingBody)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.SalaryIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.SalaryIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.SalaryIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.SalaryIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.HeritageDonatedIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.HeritageDonatedIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.InvestmentsIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.InvestmentsIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.OtherIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.OtherIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Income.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Income.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Tax.AbroadTaxes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Tax.AbroadTaxes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Tax.CitizenTax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Tax.CitizenTax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxDeclarationDetail.Tax.MilitaryTax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxDeclarationDetail.Tax.MilitaryTax)
+        </dd>
+
+    </dl>
+</div>
+
+<br />
+
+<div>
+
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.DeclarationCheck.Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayTextFor(model => model.DeclarationCheck.Message)
+        </dd>
+    </dl>
+
+</div>
+
+<br />
+
+<p>
+    @Html.ActionLink("Редагувати", "EditReport", new { id = Model.Id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>

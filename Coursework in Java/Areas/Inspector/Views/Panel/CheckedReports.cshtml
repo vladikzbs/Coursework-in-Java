@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Coursework_in_Java.Models.Tax.TaxDeclarationModel>
+
+@using Coursework_in_Java.AppKernel.HelpersExtensions
+
+@{
+    ViewBag.Title = "Перевірені податкові декларації";
+}
+
+<h2>Перевірені податкові декларації</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UniqueDeclarationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfFilling)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CitizenInformation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeclarationCheck.Passed)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UniqueDeclarationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfFilling)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CitizenInformation.FullName)
+            </td>
+            <td>
+                @Html.YesNo(item.DeclarationCheck.Passed)
+            </td>
+        </tr>
+    }
+
+</table>

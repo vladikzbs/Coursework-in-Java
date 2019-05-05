@@ -1,0 +1,164 @@
+﻿@model Coursework_in_Java.Models.Tax.TaxDeclarationModel
+@{
+    ViewBag.Title = "Створення податкового звіту";
+}
+
+<h2>Створення податкового звіту</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Податковий звіт #@ViewBag.ReportNumber</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DeclarationType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.DeclarationType, ViewBag.DeclarationTypeItems as SelectList)
+            @Html.ValidationMessageFor(model => model.DeclarationType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReportingPeriod, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ReportingPeriod, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ReportingPeriod, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Quarter, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Quarter, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Quarter, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.NameOfControllingBody, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.NameOfControllingBody, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.NameOfControllingBody, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.IsResident, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.IsResident, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.IsResident, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.IsHimselfFillsDeclaration, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.IsHimselfFillsDeclaration, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.IsHimselfFillsDeclaration, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.PayerCaterogy, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.TaxDeclarationDetail.PayerCaterogy, ViewBag.PayerCaterogyItems as SelectList)
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.PayerCaterogy, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DeclarationCheck.Inspector, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("number", ViewBag.Inspectors as SelectList)
+            @*@Html.DropDownListFor(model => model.DeclarationCheck.Inspector, ViewBag.Inspectors as SelectList)*@
+            @*@Html.ValidationMessageFor(model => model.DeclarationCheck.Inspector, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+    <p>Доходи:</p>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.Income.SalaryIncome, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.Income.SalaryIncome)
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.Income.SalaryIncome, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.Income.ExchangeSoldPropertyIncome, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.Income.ExchangeSoldPropertyIncome)
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.Income.ExchangeSoldPropertyIncome, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.Income.InvestmentsIncome, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.Income.InvestmentsIncome)
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.Income.InvestmentsIncome, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.Income.HeritageDonatedIncome, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.Income.HeritageDonatedIncome)
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.Income.HeritageDonatedIncome, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.Income.OtherIncome, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.Income.OtherIncome)
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.Income.OtherIncome, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <p>Податки: </p>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.Tax.AbroadTaxes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.Tax.AbroadTaxes)
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.Tax.AbroadTaxes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.Tax.CitizenTax, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.Tax.CitizenTax)
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.Tax.CitizenTax, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TaxDeclarationDetail.Tax.MilitaryTax, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TaxDeclarationDetail.Tax.MilitaryTax)
+            @Html.ValidationMessageFor(model => model.TaxDeclarationDetail.Tax.MilitaryTax, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.Hidden("uniqueDeclarationId", (string)ViewBag.ReportNumber)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Створити" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Назад, до списку", "Index")
+</div>
+
+

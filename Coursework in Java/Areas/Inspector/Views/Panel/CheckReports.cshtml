@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Coursework_in_Java.Models.Tax.TaxDeclarationModel>
+
+@{
+    ViewBag.Title = "Податкові декларації";
+}
+
+<h2>Податкові декларації</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UniqueDeclarationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfFilling)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CitizenInformation)
+        </th>
+        <th>
+            Опції
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UniqueDeclarationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfFilling)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CitizenInformation.FullName)
+            </td>
+            <td>
+                @Html.ActionLink("Перевірка", "Check", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
