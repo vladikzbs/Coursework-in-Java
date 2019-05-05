@@ -27,7 +27,7 @@ namespace Coursework_in_Java.Controllers
         }
 
         // GET: PersonalInfo
-        public async Task<ActionResult> PersonalInfo()
+        public async Task<ActionResult> PersonalInfoAsync()
         {
             //var user = await db.CitizenInformation.Where(x => x.CitizenInformationDetail.TaxCardNumber == UserTId)
             //                                .Include(x => x.CitizenInformationDetail)
@@ -47,7 +47,7 @@ namespace Coursework_in_Java.Controllers
 
         // GET: EditPersonalInfo
         [HttpGet]
-        public async Task<ActionResult> EditPersonalInfo(int id)
+        public async Task<ActionResult> EditPersonalInfoAsync(int id)
         {
             //var user = await db.CitizenInformation.Where(x => x.Id == id && x.CitizenInformationDetail.TaxCardNumber == UserTId)
             //                                      .Include(x => x.CitizenInformationDetail)
@@ -67,7 +67,7 @@ namespace Coursework_in_Java.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditPersonalInfo(CitizenInformationModel citizen)
+        public async Task<ActionResult> EditPersonalInfoAsync(CitizenInformationModel citizen)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace Coursework_in_Java.Controllers
 
         // GET: CreatePersonalInfo
         [HttpGet]
-        public async Task<ActionResult> CreatePersonalInfo()
+        public async Task<ActionResult> CreatePersonalInfoAsync()
         {
             var user = await db.CitizenInformation.Where(x => x.CitizenInformationDetail.TaxCardNumber == UserTId)
                                 .Include(x => x.CitizenInformationDetail)
@@ -98,7 +98,7 @@ namespace Coursework_in_Java.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreatePersonalInfo(CitizenInformationModel citizen)
+        public async Task<ActionResult> CreatePersonalInfoAsync(CitizenInformationModel citizen)
         {
             citizen.CitizenInformationDetail.TaxCardNumber = UserTId;
 

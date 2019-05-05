@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Coursework_in_Java;
 using Coursework_in_Java.Controllers;
+using Coursework_in_Java.Models.Inspectors;
 
 namespace Coursework_in_Java.Tests.Controllers
 {
@@ -35,7 +36,7 @@ namespace Coursework_in_Java.Tests.Controllers
             ViewResult result = controller.About() as ViewResult;
 
             // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
+            Assert.AreEqual("Опис", result.ViewBag.Message);
         }
 
         [TestMethod]

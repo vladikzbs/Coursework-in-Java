@@ -21,7 +21,7 @@ namespace Coursework_in_Java.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Описание";
+            ViewBag.Message = "Опис";
 
             return View();
         }
@@ -29,8 +29,8 @@ namespace Coursework_in_Java.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Contact()
         {
-            ViewBag.Access = "Доступ разрешен только пользователям!";
-            ViewBag.Message = "Контакты";
+            ViewBag.Access = "Доступ лише для користувачів!";
+            ViewBag.Message = "Контакти";
 
             return View();
         }
