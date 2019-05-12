@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Coursework_in_Java.Models.Tax
 {
-    public class TaxModel
+    public class TaxModel 
     {
         public int Id { get; set; }
 

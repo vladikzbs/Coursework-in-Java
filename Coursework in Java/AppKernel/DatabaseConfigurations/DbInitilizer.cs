@@ -9,9 +9,9 @@ using Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers;
 
 namespace Coursework_in_Java.AppKernel.DatabaseConfigurations
 {
-    public class DbInitilizer : DropCreateDatabaseAlways<ApplicationDbContext>
+    // public class DbInitilizer : DropCreateDatabaseAlways<ApplicationDbContext>
 
-    // public class DbInitilizer : CreateDatabaseIfNotExists<ApplicationDbContext>
+    public class DbInitilizer : CreateDatabaseIfNotExists<ApplicationDbContext>
     {
         private CommandInvoker commandInvoker;
 

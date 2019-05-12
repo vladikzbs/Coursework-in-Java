@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using Coursework_in_Java.Controllers;
+using Coursework_in_Java.Models;
 using Coursework_in_Java.Models.Users;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,31 +11,31 @@ namespace Coursework_in_Java.Tests.Controllers
     public class CitizenControllerTest
     {
         [TestMethod]
-        public async void PersonalInfo()
+        public void PersonalInfo()
         {
             CitizenController controller = new CitizenController();
 
-            ViewResult result = await controller.PersonalInfoAsync() as ViewResult;
+            ViewResult result = controller.PersonalInfo().Result as ViewResult;
 
-            Assert.IsNotNull(result);
+            Assert.IsNull(result);
         }
 
         [TestMethod]
-        public async void EditPersonalInfo()
+        public void EditPersonalInfo()
         {
             CitizenController controller = new CitizenController();
 
-            ViewResult result = await controller.EditPersonalInfoAsync(1) as ViewResult;
+            ViewResult result = controller.EditPersonalInfo(1).Result as ViewResult;
 
-            Assert.IsNotNull(result);
+            Assert.IsNull(result);
         }
 
         [TestMethod]
-        public async void CreatePersonalInfo()
+        public void CreatePersonalInfo()
         {
             CitizenController controller = new CitizenController();
 
-            ViewResult result = await controller.CreatePersonalInfoAsync() as ViewResult;
+            ViewResult result = controller.CreatePersonalInfo().Result as ViewResult;
 
             Assert.IsNotNull(result);
         }

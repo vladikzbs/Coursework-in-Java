@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Coursework_in_Java.Models.Inspectors
 {
-    public class InspectorModel
+    public class InspectorModel 
     {
         public InspectorModel()
         {

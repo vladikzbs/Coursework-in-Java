@@ -46,6 +46,8 @@ namespace Coursework_in_Java.Models
         {
             base.OnModelCreating(modelBuilder);
 
+
+
             modelBuilder.Configurations.Add(new CitizenInformationDetailModelConfig());
             modelBuilder.Configurations.Add(new CitizenInformationModelConfig());
             modelBuilder.Configurations.Add(new DeclarationCheckModelConfig());

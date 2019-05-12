@@ -20,7 +20,8 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
             {
                 Email = "admin@java.com",
                 UserName = "admin@java.com",
-                InspectorId = Guid.Empty.ToString()
+                InspectorId = Guid.Empty.ToString(),
+                TaxIdentification = "admin"
             };
             string password = "admin123";
 

@@ -12,7 +12,7 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
 
         public CommandInvoker()
         {
-            commands = new List<BaseCommand>();
+            this.commands = new List<BaseCommand>();
         }
 
         public void StoreCommand(BaseCommand command)

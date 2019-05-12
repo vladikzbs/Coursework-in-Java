@@ -13,7 +13,7 @@ namespace Coursework_in_Java.Models.Tax
         Підприємець,
     }
 
-    public class TaxDeclarationDetailModel
+    public class TaxDeclarationDetailModel 
     {
         public int Id { get; set; }
 

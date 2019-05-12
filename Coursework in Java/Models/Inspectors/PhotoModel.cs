@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Coursework_in_Java.Models.Inspectors
 {
-    public class PhotoModel
+    public class PhotoModel 
     {
         public int Id { get; set; }
 

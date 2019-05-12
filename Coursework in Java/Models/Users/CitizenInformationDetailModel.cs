@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Coursework_in_Java.Models.Users
 {
-    public class CitizenInformationDetailModel
+    public class CitizenInformationDetailModel 
     {
         public int Id { get; set; }
 

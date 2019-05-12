@@ -107,5 +107,10 @@ namespace Coursework_in_Java.Areas.Inspector.Controllers
 
             return View(taxDeclarations);
         }
+
+        public void Dispose()
+        {
+
+        }
     }
 }
