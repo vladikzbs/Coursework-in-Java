@@ -1,13 +1,10 @@
-﻿using Coursework_in_Java.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using System.Data.Entity;
-using System.Security.Claims;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Security.Claims;
+
+using Coursework_in_Java.Models;
 using Coursework_in_Java.AppKernel.Managers;
 
 namespace Coursework_in_Java.Areas.Inspector.Controllers
@@ -17,33 +14,33 @@ namespace Coursework_in_Java.Areas.Inspector.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private InspectorPanelManager panelManager = InspectorPanelManager.Instance();
-        public string UserIId { get; }
+        public string UserInspectorId { get; }
 
         public PanelController()
         {
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-            UserIId = identity.Claims.Where(x => x.Type == "userIId").Select(x => x.Value).SingleOrDefault();
+            UserInspectorId = GetInspectorId();
         }
 
 
-        // GET: Inspector/Panel
+        /// <summary>
+        /// Метод для генерации панели инспектора
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Метод для генерации представления со всеми налоговыми отчетами для инспектора
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> CheckReports()
         {
-            //var taxDeclarations = await db.TaxDeclarations
-            //                              .Include(x => x.DeclarationCheck)
-            //                              .Include(x => x.DeclarationCheck.Inspector)
-            //                              .Include(x => x.CitizenInformation)
-            //                              .Where(x => x.DeclarationCheck.Inspector.SpecialNumber == this.UserIId 
-            //                              && x.DeclarationCheck.Passed == false && x.DeclarationCheck.Checked == false)
-            //                              .ToListAsync();
+            // Поиск всех налоговых отчетов в менеджере
+            var taxDeclarations = await panelManager.GetTaxDeclarationByInspectorIdAsync(db, this.UserInspectorId);
 
-            var taxDeclarations = await panelManager.GetTaxDeclarationByInspectorIdAsync(db, this.UserIId);
-
+            // Если налоговых отчетов не было найдено, информируем инспектора об этом представлением с сообщением
             if (taxDeclarations == null || taxDeclarations.Count == 0)
             {
                 return View("NotFoundReports");
@@ -52,54 +49,46 @@ namespace Coursework_in_Java.Areas.Inspector.Controllers
             return View(taxDeclarations);
         }
 
+        /// <summary>
+        /// Метод для генерации представления с информацией на проверку налового отчета для инспектора
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Check(int id)
         {
-            //var taxDeclarations = await db.TaxDeclarations
-            //                  .Include(x => x.DeclarationCheck)
-            //                  .Include(x => x.DeclarationCheck.Inspector)
-            //                  .Include(x => x.CitizenInformation.CitizenInformationDetail)
-            //                  .Include(x => x.CitizenInformation.CitizenInformationDetail.Phone)
-            //                  .Include(x => x.CitizenInformation.CitizenInformationDetail.Address)
-            //                  .Include(x => x.CitizenInformation)
-            //                  .Include(x => x.TaxDeclarationDetail)
-            //                  .Include(x => x.TaxDeclarationDetail.Income)
-            //                  .Include(x => x.TaxDeclarationDetail.Tax)
-            //                  .Where(x => x.Id == id)
-            //                  .ToListAsync();
-
+            // Получение подробного описания декларации на проверку инспектору по идентификатору
             var taxDeclaration = await panelManager.GetTaxDeclarationsByIdAsync(db, id);
 
             return View(taxDeclaration);
         }
 
+        /// <summary>
+        /// Метод для обработки формы на проверку налогового отчета
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="taxChecked"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Check(int id, bool taxChecked, string message)
         {
+            // Редактирование данных налогового отчета через менеджера
             await panelManager.ConfirmEditAsync(db, id, taxChecked, message);
-            //var declarationCheck = await db.DeclarationChecks.Where(x => x.DeclarationId == id).SingleOrDefaultAsync();
 
-            //declarationCheck.Passed = taxChecked;
-            //declarationCheck.Checked = true;
-            //declarationCheck.Message = message;
-            //declarationCheck.DateOfEnd = DateTime.Now;
-
-            //db.Entry(declarationCheck).State = EntityState.Modified;
-            //await db.SaveChangesAsync();
             return View("DeclarationChecked");
         }
 
+        /// <summary>
+        /// Метод для выдачи представления с проверенными отчетами инспектора
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> CheckedReports()
         {
-            //var taxDeclarations = await db.TaxDeclarations
-            //                  .Include(x => x.DeclarationCheck)
-            //                  .Include(x => x.DeclarationCheck.Inspector)
-            //                  .Include(x => x.CitizenInformation)
-            //                  .Where(x => x.DeclarationCheck.Inspector.SpecialNumber == this.UserIId && x.DeclarationCheck.Checked == true)
-            //                  .ToListAsync();
+            // Получение отчетов проверенных инспектором
+            var taxDeclarations = await panelManager.GetCheckedReportsAsync(db, this.UserInspectorId);
 
-            var taxDeclarations = await panelManager.GetCheckedReportsAsync(db, this.UserIId);
-
+            // Если отчетов не будет найдено, выдаем представление, что даст сообщение инспектору об этом
             if (taxDeclarations == null || taxDeclarations.Count == 0)
             {
                 return View("NotFoundReports");
@@ -108,9 +97,23 @@ namespace Coursework_in_Java.Areas.Inspector.Controllers
             return View(taxDeclarations);
         }
 
-        public void Dispose()
+        /// <summary>
+        /// Освобождение управляемых ресурсов
+        /// </summary>
+        public new void Dispose()
         {
-
+            this.db.Dispose();
         }
+
+        /// <summary>
+        /// Метод для получения идентификатора инспектора
+        /// </summary>
+        /// <returns></returns>
+        private string GetInspectorId()
+        {
+            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            return identity.Claims.Where(x => x.Type == "userIId").Select(x => x.Value).SingleOrDefault();
+        }
+
     }
 }

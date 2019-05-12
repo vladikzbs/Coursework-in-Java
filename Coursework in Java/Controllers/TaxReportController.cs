@@ -21,18 +21,20 @@ namespace Coursework_in_Java.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private TaxReportManager reportManager = TaxReportManager.Instance();
-        public string UserTId { get; }
+        public string UserTaxId { get; }
 
         public TaxReportController()
         {
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-            UserTId = identity.Claims.Where(x => x.Type == "userTId").Select(x => x.Value).SingleOrDefault();
+            UserTaxId = GetUserTaxId();
         }
 
-        // GET: Index
+        /// <summary>
+        /// Метод для генерации представления со списком всех деклараций пользователя
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> Index()
         {
-            var declarations = await db.TaxDeclarations.Where(x => x.CitizenInformation.CitizenInformationDetail.TaxCardNumber == UserTId)
+            var declarations = await db.TaxDeclarations.Where(x => x.CitizenInformation.CitizenInformationDetail.TaxCardNumber == UserTaxId)
                                                        //.Include(x => x.CitizenInformation)
                                                        //.Include(x => x.CitizenInformation.CitizenInformationDetail)
                                                        .Include(x => x.DeclarationCheck)
@@ -42,115 +44,88 @@ namespace Coursework_in_Java.Controllers
             return View(declarations);
         }
 
-        // GET: CreateReport
+        /// <summary>
+        /// Метод для создания представления о создании налового отчета
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> CreateReport()
         {
-            //CitizenInformationModel citizen = await db.CitizenInformation
-            //                                          .Where(x => x.CitizenInformationDetail.TaxCardNumber == UserTId)
-            //                                          .Include(x => x.CitizenInformationDetail)
-            //                                          .Include(x => x.CitizenInformationDetail.Phone)
-            //                                          .Include(x => x.CitizenInformationDetail.Address)
-            //                                          .SingleOrDefaultAsync();
+            // Получение информации о пользователе по налоговому номеру
+            var citizen = await reportManager.GetCitizenByTaxIdAsync(this.db, this.UserTaxId);
 
-            var citizen = await reportManager.GetCitizenByTaxIdAsync(this.db, this.UserTId);
-
+            // Если информация не найдена, выдаем представление, что данные не заполнены
             if (citizen == null)
             {
                 return View("NotFoundPersonalData");
             }
 
+            // Создание пустого экземплара налогового отчета
             TaxDeclarationModel taxDeclaration = new TaxDeclarationModel();
 
-            //SelectList list1 = reportManager.DeclarationTypes;
-            //SelectList list2 = reportManager.PayerCategories;
-            //SelectList list3 = GetInspectorsList();
+            // Получение типов деклараций
             ViewBag.DeclarationTypeItems = reportManager.DeclarationTypes;
+            // Получение типов оплаты
             ViewBag.PayerCaterogyItems = reportManager.PayerCategories;
+            // Получение инспекторов
             ViewBag.Inspectors = reportManager.GetInspectorsList(db);
+            // Получение уникального номера декларации
             ViewBag.ReportNumber = new Random().Next(10000, 99999).ToString();
 
             return View(taxDeclaration);
         }
 
+        /// <summary>
+        /// Метод для обработки формы о создании отчета
+        /// </summary>
+        /// <param name="taxDeclaration"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> CreateReport(TaxDeclarationModel taxDeclaration, string number)
         {
+            // Получение инспектора по номеру через менеджера
             var inspector = await reportManager.GetInspectorBySpecialNumberAsync(db, number);
 
+            // Проверка на валидность данных отчета
             if (ModelState.IsValid)
             {
-                //CitizenInformationModel citizen = await db.CitizenInformation
-                //                                          .Where(x => x.CitizenInformationDetail.TaxCardNumber == UserTId)
-                //                                          .Include(x => x.CitizenInformationDetail)
-                //                                          .Include(x => x.CitizenInformationDetail.Phone)
-                //                                          .Include(x => x.CitizenInformationDetail.Address)
-                //                                          .SingleOrDefaultAsync();
+                // Получение информации о пользователе через менеджера по налоговому номеру
+                var citizen = await reportManager.GetCitizenByTaxIdAsync(this.db, this.UserTaxId);
 
-                var citizen = await reportManager.GetCitizenByTaxIdAsync(this.db, this.UserTId);
-
+                // Если пользователь не найден, отдаем представление, что нет персональных данных
                 if (citizen == null)
                 {
                     return View("NotFoundPersonalData");
                 }
 
-                //var declarations = await db.DeclarationChecks.Where(x => x.TaxDeclaration.CitizenInformation.CitizenInformationDetail.TaxCardNumber == UserTId)
-                //                                     .ToListAsync();
-
-                //int lineItemId = 0;
-                //int declarationId = 0;
-
-                //if (declarations?.Count == 0)
-                //{
-                //    ;
-                //}
-                //else if (declarations?.Count > 0)
-                //{
-                //    lineItemId = declarations.Max(x => x.LineItem);
-                //    declarationId = declarations.Max(x => x.DeclarationId);
-                //}
-
-
+                // Регистрация заполненного налогового отчета
                 await reportManager.RegisterDeclarationAsync(db, citizen, taxDeclaration, inspector);
-
-                //DeclarationCheckModel declarationCheckModel = new DeclarationCheckModel
-                //{
-                //    DeclarationId = -1,
-                //    InspectorId = inspector.Id,
-                //    Inspector = inspector,
-                //    DateOfStart = DateTime.Now,
-                //    Message = string.Empty,
-                //    Checked = false,
-                //    Passed = false
-
-                //};
-                //taxDeclaration.DeclarationCheck = declarationCheckModel;
-                //taxDeclaration.CitizenInformation = citizen;
-                //taxDeclaration.DateOfFilling = DateTime.Now;
-
-                //db.TaxDeclarations.Add(taxDeclaration);
-                //await db.SaveChangesAsync();
-
-                //taxDeclaration.DeclarationCheck.DeclarationId = taxDeclaration.Id;
-                //db.Entry(taxDeclaration.DeclarationCheck).State = EntityState.Modified;
-                //await db.SaveChangesAsync();
 
                 return RedirectToAction("Index");
             }
-            //SelectList list1 = new SelectList((IEnumerable<DeclarationType>)Enum.GetValues(typeof(DeclarationType)));
-            //SelectList list2 = new SelectList((IEnumerable<PayerCaterogy>)Enum.GetValues(typeof(PayerCaterogy)));
-            //SelectList list3 = GetInspectorsList();
+
+            // Получение типов деклараций
             ViewBag.DeclarationTypeItems = reportManager.DeclarationTypes;
+            // Получение типов оплаты
             ViewBag.PayerCaterogyItems = reportManager.PayerCategories;
+            // Получение инспекторов
             ViewBag.Inspectors = reportManager.GetInspectorsList(db);
+            // Получение уникального номера декларации
             ViewBag.ReportNumber = taxDeclaration.UniqueDeclarationId;
 
             return View(taxDeclaration);
         }
 
+        /// <summary>
+        /// Метод для выдачи представления с подробной информацией об налоговом отчете
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
+            // Получение всей информации о отчете по ид из бд
             var taxDeclaration = await db.TaxDeclarations.Where(x => x.Id == id)
                                               .Include(x => x.TaxDeclarationDetail)
                                               .Include(x => x.TaxDeclarationDetail.Income)
@@ -163,13 +138,20 @@ namespace Coursework_in_Java.Controllers
             return View(taxDeclaration);
         }
 
+        /// <summary>
+        /// Метод для выдачи представления для удаления налогового отчета
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
+            // Получение информации о налоговом отчете по идентификатору в бд
             var taxDeclaration = await db.TaxDeclarations.Where(x => x.Id == id)
                                   .Include(x => x.DeclarationCheck)
                                   .SingleOrDefaultAsync();
 
+            // Если декларация прошла проверку, то ее проверка запрещена. Показываем представление пользователю
             if (taxDeclaration.DeclarationCheck.Checked == true && taxDeclaration.DeclarationCheck.Passed == true)
             {
                 return View("DeleteCanceledPermission");
@@ -178,90 +160,75 @@ namespace Coursework_in_Java.Controllers
             return View(taxDeclaration);
         }
 
+        /// <summary>
+        /// Метод для обработки формы по удалению налогового отчета
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="UniqueDeclarationId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Delete(int Id, string UniqueDeclarationId)
         {
-            //var taxDeclaration = await db.TaxDeclarations.Where(x => x.Id == Id && x.UniqueDeclarationId == UniqueDeclarationId)
-            //                      .Include(x => x.TaxDeclarationDetail)
-            //                      .Include(x => x.TaxDeclarationDetail.Income)
-            //                      .Include(x => x.TaxDeclarationDetail.Tax)
-            //                      .Include(x => x.DeclarationCheck)
-            //                      .Include(x => x.DeclarationCheck.Inspector)
-            //                      .Include(x => x.CitizenInformation)
-            //                      .Include(x => x.CitizenInformation.CitizenInformationDetail)
-            //                      .SingleOrDefaultAsync();
-
-            //db.Taxes.Remove(taxDeclaration.TaxDeclarationDetail.Tax);
-            //db.Incomes.Remove(taxDeclaration.TaxDeclarationDetail.Income);
-            //db.TaxDeclarationDetails.Remove(taxDeclaration.TaxDeclarationDetail);
-            //db.DeclarationChecks.Remove(taxDeclaration.DeclarationCheck);
-            //db.TaxDeclarations.Remove(taxDeclaration);
-
-            //await db.SaveChangesAsync();
-
+            // Удаление налогового отчета по идентификаторам через менеджера
             await reportManager.DeleteDeclarationByIdAndUniqueIdAsync(db, Id, UniqueDeclarationId);
 
             return View("DeleteSucceded");
         }
 
+        /// <summary>
+        /// Метод для генерации представления с редактированием отчета
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> EditReport(int id)
         {
-            //var taxDeclaration = await db.TaxDeclarations.Where(x => x.Id == id)
-            //                                  .Include(x => x.TaxDeclarationDetail)
-            //                                  .Include(x => x.TaxDeclarationDetail.Income)
-            //                                  .Include(x => x.TaxDeclarationDetail.Tax)
-            //                                  .Include(x => x.DeclarationCheck)
-            //                                  .Include(x => x.DeclarationCheck.Inspector)
-            //                                  .Include(x => x.CitizenInformation)
-            //                                  .Include(x => x.CitizenInformation.CitizenInformationDetail)
-            //                                  .SingleOrDefaultAsync();
-
+            // Получение налогового отчета по идентификатору из бд через менеджера
             var taxDeclaration = await reportManager.GetDeclarationByIdAsync(db, id);
 
+            // Если декларация прошла проверку, то ее проверка запрещена. Показываем представление пользователю
             if (taxDeclaration.DeclarationCheck.Checked == true && taxDeclaration.DeclarationCheck.Passed == true)
             {
                 return View("EditCanceledPermission");
             }
 
+            // Получение списка инспекторов из бд через менеджера
             ViewBag.Inspectors = reportManager.GetInspectorsList(db);
-
 
             return View(taxDeclaration);
         }
 
+        /// <summary>
+        /// Метод для обработки формы по редактированию налогового отчета
+        /// </summary>
+        /// <param name="taxDeclaration"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> EditReport(TaxDeclarationModel taxDeclaration, string number)
         {
+            // Получение экземпляра инспектора по номеру
             var inspector = await reportManager.GetInspectorBySpecialNumberAsync(db, number);
 
+            // Проверка на валидность заполненных данных
             if (ModelState.IsValid)
             {
-                //var declarationCheck = await db.DeclarationChecks.Where(x => x.DeclarationId == taxDeclaration.Id).SingleOrDefaultAsync();
-                //taxDeclaration.DeclarationCheck = declarationCheck;
-                //taxDeclaration.DeclarationCheck.Inspector = inspector;
-                //taxDeclaration.DeclarationCheck.Inspector.Id = inspector.Id;
-                //taxDeclaration.DeclarationCheck.DateOfStart = DateTime.Now;
-                //taxDeclaration.DeclarationCheck.Checked = false;
-                //taxDeclaration.DeclarationCheck.Passed = false;
-
-                //db.Entry(taxDeclaration).State = EntityState.Modified;
-                //db.Entry(taxDeclaration.TaxDeclarationDetail).State = EntityState.Modified;
-                //db.Entry(taxDeclaration.TaxDeclarationDetail).State = EntityState.Modified;
-                //db.Entry(taxDeclaration.TaxDeclarationDetail.Income).State = EntityState.Modified;
-                //db.Entry(taxDeclaration.TaxDeclarationDetail.Tax).State = EntityState.Modified;
-                //db.Entry(taxDeclaration.DeclarationCheck.Inspector).State = EntityState.Modified;
-                //await db.SaveChangesAsync();
-
+                // Подтверждение обновления данных в бд через менеджера
                 await reportManager.ConfirmEditAsync(db, taxDeclaration, inspector);
 
+                // Перенаправление пользователя на страницу со списком отчетов
                 return RedirectToAction("Index");
             }
 
+            // Получение списка инспекторов из бд через менеджера
             ViewBag.Inspectors = reportManager.GetInspectorsList(db);
             return View(taxDeclaration);
         }
 
+        /// <summary>
+        /// Метод для выдачи представления с правилами заполнения налогового отчета
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Rules()
@@ -269,32 +236,23 @@ namespace Coursework_in_Java.Controllers
             return View();
         }
 
-        //private SelectList GetInspectorsList()
-        //{
-        //    var inspectors = db.Inspectors.Where(x => x.Name != "Default").ToList();
+        /// <summary>
+        /// Освобождение управляемых ресурсов
+        /// </summary>
+        public new void Dispose()
+        {
+            this.db.Dispose();
+        }
 
-        //    //          new SelectList(
-        //    //          new List<SelectListItem>
-        //    //          {
-        //    //              new SelectListItem { Text = "Homeowner", Value = ((int)UserType.Homeowner).ToString()},
-        //    //              new SelectListItem { Text = "Contractor", Value = ((int)UserType.Contractor).ToString()},
-        //    //          }, "Value", "Text");
+        /// <summary>
+        /// Получение налогового идентификатора для аккаунта
+        /// </summary>
+        /// <returns></returns>
+        private string GetUserTaxId()
+        {
+            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            return identity.Claims.Where(x => x.Type == "userTId").Select(x => x.Value).SingleOrDefault();
+        }
 
-        //    //List<SelectListItem> listItems = new List<SelectListItem>();
-        //    //foreach (var inspector in inspectors)
-        //    //{
-        //    //    string text = inspector.Surname + " " + inspector.Name + " " + inspector.Patronymic;
-        //    //    listItems.Add(new SelectListItem { Text = text, Value = inspector.SpecialNumber });
-        //    //}
-
-        //    SelectList listItems = new SelectList(inspectors, "SpecialNumber", "FullName");
-
-        //    return listItems;
-        //}
-
-        //private async Task<InspectorModel> GetInspectorBySpecialNumber(string number)
-        //{
-        //    return await db.Inspectors.Where(x => x.SpecialNumber == number).SingleOrDefaultAsync();
-        //}
     }
 }

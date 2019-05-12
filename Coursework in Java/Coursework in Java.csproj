@@ -174,8 +174,6 @@
     <Compile Include="AppKernel\DatabaseConfigurations\Initializers\InspectorsInitializeCommand.cs" />
     <Compile Include="AppKernel\DbRepositories\IRepository.cs" />
     <Compile Include="AppKernel\DbRepositories\Repository.cs" />
-    <Compile Include="AppKernel\DbRepositories\StubContext.cs" />
-    <Compile Include="AppKernel\DbRepositories\StubRepository.cs" />
     <Compile Include="AppKernel\HelpersExtensions\HtmlHelperExtensions.cs" />
     <Compile Include="AppKernel\MainInterfaces\ITaxDeclaration.cs" />
     <Compile Include="AppKernel\DatabaseConfigurations\Initializers\CitizenInitializeCommand.cs" />

@@ -2,9 +2,8 @@
 using System.Data.Entity;
 using System.Threading.Tasks;
 
-using Coursework_in_Java.Models.Users;
-using Coursework_in_Java.AppKernel.DbRepositories;
 using Coursework_in_Java.Models;
+using Coursework_in_Java.Models.Users;
 
 namespace Coursework_in_Java.AppKernel.Managers
 {

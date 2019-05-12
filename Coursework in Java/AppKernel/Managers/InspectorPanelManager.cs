@@ -1,25 +1,41 @@
-﻿using Coursework_in_Java.Models;
-using Coursework_in_Java.Models.Tax;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Data.Entity;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
+using Coursework_in_Java.Models;
+using Coursework_in_Java.Models.Tax;
 
 namespace Coursework_in_Java.AppKernel.Managers
 {
     public class InspectorPanelManager
     {
+        /// <summary>
+        /// Ссылка на единый экземпляр InspectorPanelManager
+        /// </summary>
         private static InspectorPanelManager @this;
 
+        /// <summary>
+        /// Конструктор по-умолчанию (Для наследников)
+        /// </summary>
         protected InspectorPanelManager() { }
 
+        /// <summary>
+        /// Метод для создания экземпляра InspectorPanelManager (Singletone)
+        /// </summary>
+        /// <returns></returns>
         public static InspectorPanelManager Instance()
         {
             return @this ?? (@this = new InspectorPanelManager());
         }
 
+        /// <summary>
+        /// Метод для получения коллекции налоговых отчетов на проверку по идентификатору инспектора
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="inspectorId"></param>
+        /// <returns></returns>
         public async Task<List<TaxDeclarationModel>> GetTaxDeclarationByInspectorIdAsync(ApplicationDbContext db, string inspectorId)
         {
             var taxDeclarations = await db.TaxDeclarations
@@ -33,6 +49,12 @@ namespace Coursework_in_Java.AppKernel.Managers
             return taxDeclarations;
         }
 
+        /// <summary>
+        /// Метод для получения полной информации о налоговом отчете по идентификатору отчета
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<TaxDeclarationModel> GetTaxDeclarationsByIdAsync(ApplicationDbContext db, int id)
         {
             var taxDeclarations = await db.TaxDeclarations
@@ -51,6 +73,14 @@ namespace Coursework_in_Java.AppKernel.Managers
             return taxDeclarations[0];
         }
 
+        /// <summary>
+        /// Метод для обновления налогового отчета в бд по указаниям инспектора
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="id"></param>
+        /// <param name="passed"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public async Task ConfirmEditAsync(ApplicationDbContext db, int id, bool passed, string message)
         {
             var declarationCheck = await db.DeclarationChecks.Where(x => x.DeclarationId == id).SingleOrDefaultAsync();
@@ -64,6 +94,12 @@ namespace Coursework_in_Java.AppKernel.Managers
             await db.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Метод для получения проверенных инспектором налоговых отчетов из бд по идентификатору инспектора
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="inspectorId"></param>
+        /// <returns></returns>
         public async Task<List<TaxDeclarationModel>> GetCheckedReportsAsync(ApplicationDbContext db, string inspectorId)
         {
             var taxDeclarations = await db.TaxDeclarations
