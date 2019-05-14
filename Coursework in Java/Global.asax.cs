@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 
 using Coursework_in_Java.AppKernel.DatabaseConfigurations;
+using Coursework_in_Java.Models;
 
 namespace Coursework_in_Java
 {
@@ -15,12 +16,21 @@ namespace Coursework_in_Java
     {
         protected void Application_Start()
         {
-            Database.SetInitializer(new DbInitilizer());
+            CreateAndIninitializeDbIfNotExist();
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+
+        private void CreateAndIninitializeDbIfNotExist()
+        {
+            Database.SetInitializer(new DbInitilizer());
+            var db = new ApplicationDbContext();
+            db.SaveChanges();
+            db.Dispose();
         }
     }
 }

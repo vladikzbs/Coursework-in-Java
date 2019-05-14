@@ -11,7 +11,7 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
     {
         public override void Execute(ApplicationDbContext db)
         {
-            var admin = db.Users.Where(x => x.Email == "admin@java.com").SingleOrDefault();
+            var user = db.Users.Where(x => x.Email == "user@java.com").SingleOrDefault();
 
             PhoneModel phone = new PhoneModel
             {
@@ -29,7 +29,7 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
             CitizenInformationDetailModel citizenInformation = new CitizenInformationDetailModel
             {
                 PostIndex = "232131",
-                TaxCardNumber = admin.TaxIdentification,
+                TaxCardNumber = user.TaxIdentification,
                 Phone = phone,
                 Address = address
             };
@@ -39,7 +39,7 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
                 Name = "Влад",
                 Surname = "Невідомий",
                 Patronymic = "Анонім",
-                Email = admin.Email,
+                Email = user.Email,
                 CitizenInformationDetail = citizenInformation
             };
 

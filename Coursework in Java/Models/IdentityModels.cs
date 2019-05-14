@@ -33,7 +33,7 @@ namespace Coursework_in_Java.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("JavaDbPublish", throwIfV1Schema: false)
         {
         }
 

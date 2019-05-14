@@ -16,16 +16,16 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
             ApplicationUserManager userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
             RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
-            var admin = new ApplicationUser
+            var user = new ApplicationUser
             {
-                Email = "admin@java.com",
-                UserName = "admin@java.com",
+                Email = "user@java.com",
+                UserName = "user@java.com",
                 InspectorId = Guid.Empty.ToString(),
-                TaxIdentification = "admin"
+                TaxIdentification = "user"
             };
-            string password = "admin123";
+            string password = "java123";
 
-            var result = userManager.Create(admin, password);
+            var result = userManager.Create(user, password);
 
             if (result.Succeeded)
             {
@@ -35,7 +35,7 @@ namespace Coursework_in_Java.AppKernel.DatabaseConfigurations.Initializers
                 {
                     if (HasNeededRole(role.Name))
                     {
-                        userManager.AddToRole(admin.Id, role.Name);
+                        userManager.AddToRole(user.Id, role.Name);
 
                     }
                 }

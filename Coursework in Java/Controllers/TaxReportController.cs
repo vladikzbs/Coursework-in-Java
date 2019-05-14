@@ -192,9 +192,10 @@ namespace Coursework_in_Java.Controllers
                 return View("EditCanceledPermission");
             }
 
-            // Получение списка инспекторов из бд через менеджера
-            ViewBag.Inspectors = reportManager.GetInspectorsList(db);
 
+
+            // Получение списка инспекторов из бд через менеджера
+            ViewBag.Inspectors = reportManager.GetInspectorsList(db, taxDeclaration.DeclarationCheck.Inspector.FullName);
             return View(taxDeclaration);
         }
 
@@ -221,7 +222,7 @@ namespace Coursework_in_Java.Controllers
             }
 
             // Получение списка инспекторов из бд через менеджера
-            ViewBag.Inspectors = reportManager.GetInspectorsList(db);
+            ViewBag.Inspectors = reportManager.GetInspectorsList(db, taxDeclaration.DeclarationCheck.Inspector.FullName);
             return View(taxDeclaration);
         }
 

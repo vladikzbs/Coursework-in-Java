@@ -66,9 +66,39 @@ namespace Coursework_in_Java.AppKernel.Managers
             var inspectors = db.Inspectors.Where(x => x.Name != "Default").ToList();
 
             // Создание коллекции выборки для разметки с инспекторами
-            SelectList listItems = new SelectList(inspectors, "SpecialNumber", "FullName");
+            SelectList listItems = new SelectList(inspectors, "SpecialNumber", "FullName" );
 
             return listItems;
+        }
+
+        /// <summary>
+        /// Получение списка инспекторов
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
+        public SelectList GetInspectorsList(ApplicationDbContext db, string name)
+        {
+            // Запрос в бд для получения коллекции всех инспекторов
+            var inspectors = db.Inspectors.Where(x => x.Name != "Default").ToList();
+
+            // Создание коллекции выборки для разметки с инспекторами
+            SelectList listItems = new SelectList(inspectors, "SpecialNumber", "FullName", name);
+
+            return listItems;
+        }
+
+
+        /// <summary>
+        /// Получение списка инспекторов
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
+        public List<InspectorModel> GetInspectorsIEnumerable(ApplicationDbContext db)
+        {
+            // Запрос в бд для получения коллекции всех инспекторов
+            var inspectors = db.Inspectors.Where(x => x.Name != "Default").ToList();
+
+            return inspectors;
         }
 
         /// <summary>
@@ -208,6 +238,7 @@ namespace Coursework_in_Java.AppKernel.Managers
             db.Entry(taxDeclaration.TaxDeclarationDetail).State = EntityState.Modified;
             db.Entry(taxDeclaration.TaxDeclarationDetail.Income).State = EntityState.Modified;
             db.Entry(taxDeclaration.TaxDeclarationDetail.Tax).State = EntityState.Modified;
+            db.Entry(taxDeclaration.DeclarationCheck).State = EntityState.Modified;
             db.Entry(taxDeclaration.DeclarationCheck.Inspector).State = EntityState.Modified;
             await db.SaveChangesAsync();
         }

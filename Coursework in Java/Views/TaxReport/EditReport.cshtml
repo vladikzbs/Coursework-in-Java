@@ -86,7 +86,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.DeclarationCheck.Inspector, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("number", ViewBag.Inspectors as SelectList)
+            @Html.DropDownList("number", ViewBag.Inspectors as SelectList,  htmlAttributes: new { @class = "form-control" })
         </div>
     </div>
 

@@ -211,6 +211,14 @@
             @Html.DisplayFor(model => model.TaxDeclarationDetail.Tax.MilitaryTax)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.DeclarationCheck.Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeclarationCheck.Message)
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm())
